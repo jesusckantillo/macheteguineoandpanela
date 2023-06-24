@@ -1,28 +1,52 @@
 const optionButtons = document.querySelectorAll('#choices-container button')
-
+const img = document.querySelectorAll('#choices-container button img')[0]
 optionButtons.forEach(button =>{
     button.addEventListener('click', handleButtonClick)
 });
 
+
+function changeImageByChoice(image,choice){
+    switch(choice){
+        case 'rock':
+            image.src = 'static/panela.jpg'
+            break;
+        case 'paper':
+            image.src = 'static/guineo.jpeg'
+            break;
+        case 'scissors':
+            image.src = 'static/machete.jpg'
+            break;
+}
+}
+
+
 function displayComputerChoice(computerChoice){
-    const computerChoiceDisplay = document.getElementById('computer-choice-text')
-    computerChoiceDisplay.textContent = computerChoice;
+    const computerButtonImage= document.getElementById('versus-section-computer-button-img')
+    changeImageByChoice(computerButtonImage,computerChoice)
+   
+}
+
+
+function displayUserChoice(userChoice){
+    const userButtonImage= document.getElementById('versus-section-player-button-img')
+    changeImageByChoice(userButtonImage,userChoice)
 }
 
 
 function displayWinner(winner){
     const winnerDisplay = document.getElementById('result-text')
     winnerDisplay.textContent = winner;
-    console.log(winner);
 }
 
 
 function handleButtonClick(event){
-    const playerSelecion = event.target.id;
+    const playerSelection = event.target.alt;
     let computerSelection = getComputerChoice();
-    let winner = getWinner(computerSelection,playerSelecion);
+    let winner = getWinner(computerSelection,playerSelection);
     displayComputerChoice(computerSelection);
+    displayUserChoice(playerSelection);
     displayWinner(winner);
+    
 }
 
 
@@ -37,6 +61,8 @@ function getComputerChoice(){
 function getWinner(computerSelection, playerSelection) {
     computerSelection = computerSelection.toLowerCase();
     playerSelection = playerSelection.toLowerCase();
+    console.log("Computer: " + computerSelection);
+    console.log("Player: " + playerSelection);
 
     if (computerSelection === playerSelection) {
         return "Tie" + computerSelection + " vs " + playerSelection;
